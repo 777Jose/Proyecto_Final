@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} {% endblock %} </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="../static/css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid px-0">
+            <a class="navbar-brand" href="#"><img src="../static/img/logo.png" alt="" width="100" /></a>
+            <div class="order-lg-3 d-flex align-items-center">
+                <div>
+                    <div class="d-flex align-items-center">
+                        <div class="dropdown me-2">
+                            <!-- <button
+                                class="btn btn-light btn-icon rounded-circle d-flex align-items-center bd-theme"
+                                type="button"
+                                aria-expanded="false"
+                                data-bs-toggle="dropdown"
+                                aria-label="Toggle theme (auto)">
+                                <i class="bi theme-icon-active"></i>
+                                <span class="visually-hidden bs-theme-text">Toggle theme</span>
+                            </button> -->
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bs-theme-text">
+                                <li>
+                                    <button
+                                        type="button"
+                                        class="dropdown-item d-flex align-items-center"
+                                        data-bs-theme-value="light"
+                                        aria-pressed="false">
+                                        <i class="bi theme-icon bi-sun-fill"></i>
+                                        <span class="ms-2">Light</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        class="dropdown-item d-flex align-items-center"
+                                        data-bs-theme-value="dark"
+                                        aria-pressed="false">
+                                        <i class="bi theme-icon bi-moon-stars-fill"></i>
+                                        <span class="ms-2">Dark</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        class="dropdown-item d-flex align-items-center active"
+                                        data-bs-theme-value="auto"
+                                        aria-pressed="true">
+                                        <i class="bi theme-icon bi-circle-half"></i>
+                                        <span class="ms-2">Auto</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <a href="/login" class="btn btn-outline-primary shadow-sm me-1">Sign In</a>
+                        <a href="/register" class="btn btn-primary d-none d-md-block">Sign Up</a>
+                    </div>
+                </div>
+                <!-- Button -->
+                <button
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbar-default"
+                    aria-controls="navbar-default"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="icon-bar top-bar mt-0"></span>
+                    <span class="icon-bar middle-bar"></span>
+                    <span class="icon-bar bottom-bar"></span>
+                </button>
+            </div>
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="navbar-default">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Libros</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            data-bs-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            data-bs-display="static">
+                            Categorias
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarDropdown">
+                            <li class="dropdown-submenu dropend">
+                                <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#"></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="../pages/course-category.html">Novela</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="dropdown-item">Matematica</a>
+                                    </li>
+                                    <li>
+                                        <a href="#!" class="dropdown-item">Física</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#!" class="dropdown-item"></a>
+                            </li>
+                            <li>
+                                <a href="#!" class="dropdown-item">Anthor Action</a>
+                            </li>
+                            <li>
+                                <a href="#!" class="dropdown-item">Something else here</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center">
+                    <span class="position-absolute ps-3 search-icon">
+                        <i class="fe fe-search"></i>
+                    </span>
+                    <input type="search" class="form-control ps-6" placeholder="Buscar" />
+                </form>
+            </div>
+        </div>
+    </nav>
+        {% block content %} {% endblock %}
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</section>
+
+
+  </body>
+</html>

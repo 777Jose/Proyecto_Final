@@ -1,6 +1,7 @@
 from flask import Flask
 import sqlite3
 from blueprints.login import login_bp
+from blueprints.index import index_bp
 
 app = Flask(__name__)
 app.secret_key = 'miclavesecreta'
@@ -49,6 +50,7 @@ def init_db():
         id_categoria INTEGER NOT NULL,
         descripcion TEXT,
         archivo TEXT NOT NULL,
+        imagen TEXT,
         fecha_publicacion DATE,
         fecha_agregado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (id_autor) REFERENCES Autores(id_autor),
@@ -67,6 +69,8 @@ def init_db():
         FOREIGN KEY (id_usuario) REFERENCES Usuarios(id_usuario),
         FOREIGN KEY (id_libro) REFERENCES Libros(id_libro)
         )
+
+        
         """
     )
     conn.commit()
@@ -74,6 +78,7 @@ def init_db():
 
 init_db()
 
+app.register_blueprint(index_bp)
 app.register_blueprint(login_bp)
 
 if __name__ == "__main__":
