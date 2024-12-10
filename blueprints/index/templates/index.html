@@ -22,16 +22,18 @@
           <!-- Recorriendo las categorías obtenidas desde la base de datos -->
           {% for categoria in categorias %}
             <div>
-              <a href="{{ url_for('index.categorias') }}">
+              <!-- Redirigir a libros_por_categoria con el id de la categoría -->
+              <a href="{{ url_for('index.libros_por_categoria', categoria_id=categoria[0]) }}">
                 <h4><small>{{ categoria[1] }}</small></h4> <!-- Nombre de la categoría -->
                 <picture>
-                  <img src="{{ url_for('static', filename='img/categoriasimg/' + categoria[1]) }}" alt="Imagen de categoría">
+                  <img src="{{ url_for('static', filename='img/categoriasimg/' + categoria[1] + '.png') }}" alt="Imagen de categoría">
                 </picture>
               </a>
             </div>
           {% endfor %}
         </div>
       </div>
+      
     </div>
   </div>
 </section>
@@ -66,4 +68,3 @@
 
 
 {% endblock %}
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>

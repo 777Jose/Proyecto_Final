@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} CATEGORIA DE LIBROS {% endblock %}
+
+{% block content %}
+
+<section class="related-secction section section">
+    <div class="container">
+      <!-- Mostrar el título de la categoría -->
+      <h2 class="section-title text-center">LIBROS DE LA CATEGORÍA: {{ categoria[0] }}</h2>
+      <div class="text-center mb-4">{{ categoria[1] }}</div>
+  
+      <div class="row">
+        <!-- Iterar sobre los libros de la categoría -->
+        {% for libro in libros %}
+        <div class="col-6 col-lg-3 mb-5">
+          <div class="card text-center">
+            <!-- Mostrar la imagen del libro -->
+            <a href="{{ url_for('static', filename='libros/' + libro[3]) }}" target="_blank">
+              <img class="img-fluid" src="{{ url_for('static', filename='img/librosimg/' + libro[4]) }}" alt="Imagen del libro">
+            </a>
+            <div class="card-body">
+              <h5 class="card-title">{{ libro[0] }}</h5>
+              <p class="card-autor"><strong>Autor:</strong> {{ libro[1] }}</p>
+              <p class="card-descripcion">{{ libro[2] }}</p>
+              <p class="card-fecha"><strong>Publicado:</strong> {{ libro[5] }}</p>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <!-- Mostrar mensaje si no hay libros -->
+        <div class="col-12 text-center">
+          <p>No hay libros disponibles en esta categoría.</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  
+  
+  {% endblock %}
