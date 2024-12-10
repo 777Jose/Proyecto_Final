@@ -6,6 +6,12 @@
     font-family: Arial, sans-serif;
 }
 
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+
 body {
     display: flex;
     min-height: 100vh;
@@ -13,17 +19,23 @@ body {
     color: #333;
 }
 
+/* Contenedor principal */
 .container {
     display: flex;
     width: 100%;
 }
 
+/* Barra lateral */
 .sidebar {
     width: 250px;
     background-color: #f8f9fa;
     border-right: 1px solid #ddd;
     display: flex;
     flex-direction: column;
+    height: 100vh; /* Asegura que ocupe toda la altura */
+    position: fixed; /* Fija la barra en su lugar */
+    top: 0;
+    left: 0;
 }
 
 .logo {
@@ -36,6 +48,7 @@ body {
 
 .menu ul {
     list-style: none;
+    padding: 0;
 }
 
 .menu li {
@@ -46,6 +59,7 @@ body {
 .menu a {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Separa el texto de la flecha */
     padding: 15px 20px;
     text-decoration: none;
     color: #333;
@@ -53,7 +67,7 @@ body {
 }
 
 .menu i {
-    margin-right: 10px; /* Espacio entre el icono y el texto */
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
     font-size: 1.2em;
     color: #007bff;
 }
@@ -64,7 +78,7 @@ body {
 }
 
 .menu a:hover i {
-    color: #0056b3; /* Cambia el color del icono al pasar el mouse */
+    color: #0056b3; /* Cambia el color del ícono al pasar el mouse */
 }
 
 .menu .dropdown-menu {
@@ -94,11 +108,15 @@ body {
 }
 
 .main-content {
+    margin-left: 250px; /* Ajusta el contenido para que no se superponga con la barra lateral */
     flex: 1;
     display: flex;
     flex-direction: column;
+    background-color: #fff; /* Fondo del contenido principal */
+    padding: 20px; /* Espaciado general */
 }
 
+/* Cabecera */
 .header {
     padding: 20px;
     background-color: #fff;
@@ -109,20 +127,33 @@ body {
 }
 
 .user-info {
-    font-size: 0.9em;
+    display: flex;
+    align-items: center; /* Centra el contenido verticalmente */
+    font-size: 20px;
     color: #555;
 }
 
 .avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 50px; /* Tamaño del círculo */
+    height: 50px; /* Tamaño del círculo */
+    border-radius: 50%; /* Hace que sea un círculo */
+    margin-right: 15px; /* Espaciado entre el avatar y el texto */
+    border: 2px solid #ddd; /* Borde del círculo */
+    overflow: hidden; /* Asegura que el contenido no exceda el círculo */
 }
 
+/* Ajustar el texto */
+.user-info span {
+    display: flex;
+    align-items: center; /* Centra el texto verticalmente */
+    line-height: normal; /* Normaliza la altura de línea */
+}
+
+/* Contenido */
 .content {
-    padding: 20px;
-    background-color: #f9f9ff;
+    display: flex;
+    flex-direction: column; /* Asegura la disposición vertical */
+    gap: 20px; /* Espaciado entre elementos (título, botón y tabla) */
     flex: 1;
 }
 
@@ -138,13 +169,53 @@ body {
     transform: rotate(180deg); /* Rota la flecha cuando el menú está activo */
 }
 
-/* Opcional: alinea mejor los íconos */
-.menu a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Para separar texto del icono */
-    padding: 15px 20px;
-    text-decoration: none;
+/* Tabla */
+.table {
+    width: 100%;
+    margin-bottom: 20px;
     color: #333;
-    font-weight: 500;
+    border-collapse: collapse;
+}
+
+.table thead {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #fff;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
 }

@@ -1,0 +1,51 @@
+{% extends 'baseadm.html' %}
+
+{% block title %}Eliminar Usuario | ADMINISTRADOR{% endblock %}
+
+{% block content %}
+<h1>Eliminar Usuario</h1>
+<p>En esta sección puedes eliminar usuarios de la biblioteca.</p>
+
+<!-- Tabla para mostrar usuarios -->
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario['id_usuario'] }}</td>
+            <td>{{ usuario['nombre'] }}</td>
+            <td>{{ usuario['email'] }}</td>
+            <td>{{ usuario['rol'] }}</td>
+            <td>
+                <!-- Formulario para eliminar usuario -->
+                <form action="{{ url_for('administrador.eliminar_usuario') }}" method="POST" style="display: inline;">
+                    <input type="hidden" name="id_usuario" value="{{ usuario['id_usuario'] }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Mensajes flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="alert alert-dismissible mt-3">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}

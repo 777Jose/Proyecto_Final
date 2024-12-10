@@ -1,0 +1,49 @@
+{% extends 'baseadm.html' %}
+
+{% block title %}Eliminar Libro | ADMINISTRADOR{% endblock %}
+
+{% block content %}
+<h1>Eliminar Libro</h1>
+<p>En esta sección puedes eliminar libros de la biblioteca.</p>
+
+<!-- Tabla de libros -->
+<table class="table table-dark table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoría</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro['id_libro'] }}</td>
+            <td>{{ libro['titulo'] }}</td>
+            <td>{{ libro['autor'] }}</td>
+            <td>{{ libro['categoria'] }}</td>
+            <td>
+                <form action="{{ url_for('administrador.eliminar_libro', id_libro=libro['id_libro']) }}" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Mensajes flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="alert alert-dismissible mt-3">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}

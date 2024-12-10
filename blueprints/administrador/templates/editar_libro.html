@@ -1,0 +1,15 @@
+{% extends 'baseadm.html' %}
+
+{% block title %}Editar Libro | ADMINISTRADOR{% endblock %}
+
+{% block content %}
+<h1>Editar Libro</h1>
+<form method="POST">
+    <div class="mb-3">
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" value="{{ libro['titulo'] }}" required>
+    </div>
+    <!-- Repetir el resto de los campos como en agregar_libro.html pero precargados -->
+    ...
+</form>
+{% endblock %}
