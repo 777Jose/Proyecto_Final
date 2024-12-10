@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Resultados de búsqueda{% endblock %}
+
+{% block content %}
+<h1>Resultados de búsqueda para "{{ query }}"</h1>
+
+{% if libros %}
+    <div class="row">
+        {% for libro in libros %}
+        <div class="col-6 col-lg-3 mb-5">
+            <div class="card text-center">
+                <a href="{{ url_for('index.mostrar_libro', libro_id=loop.index) }}">
+                    <img class="img-fluid" src="{{ url_for('static', filename='img/librosimg/' + libro[5]) }}" alt="Imagen del libro">
+                </a>
+                <div class="card-body">
+                    <h5 class="card-title">{{ libro[0] }}</h5>
+                    <p class="card-autor"><strong>Autor:</strong> {{ libro[1] }}</p>
+                    <p class="card-categoria"><strong>Categoría:</strong> {{ libro[2] }}</p>
+                    <p class="card-descripcion">{{ libro[3] }}</p>
+                    <p class="card-fecha"><strong>Publicado:</strong> {{ libro[6] }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No se encontraron resultados para "{{ query }}".</p>
+{% endif %}
+{% endblock %}

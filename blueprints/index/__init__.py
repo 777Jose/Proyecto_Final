@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_file
+from flask import Blueprint, render_template, redirect, url_for, request
 import sqlite3
 
 index_bp = Blueprint("index", __name__, template_folder="templates")
@@ -11,6 +11,18 @@ def query_db(query, args=(), one=False):
     rv = cursor.fetchall()
     conn.close()
     return (rv[0] if rv else None) if one else rv
+
+@index_bp.app_context_processor
+def inject_categories():
+    # Consulta para obtener todas las categorías
+    categorias = query_db("""
+        SELECT 
+            id_categoria, 
+            nombre 
+        FROM categorias
+    """)
+    return {'categorias_navbar': categorias}
+
 
 # Ruta principal para mostrar los libros y categorías (incluye el carrusel)
 @index_bp.route("/")
@@ -102,3 +114,30 @@ def mostrar_libro(libro_id):
         return render_template("libros.html", libro=libro)
     else:
         return "Libro no encontrado", 404
+
+@index_bp.route('/buscar')
+def buscar_libros():
+    query = request.args.get('query', '').strip()  # Obtén el término de búsqueda
+    if not query:
+        return redirect(url_for('index.index'))  # Si no hay término, redirige al índice
+
+    try:
+        # Consulta para buscar libros por título o categoría
+        libros = query_db("""
+            SELECT 
+                libros.titulo, 
+                autores.nombre || ' ' || autores.apellido AS autor, 
+                categorias.nombre AS categoria, 
+                libros.descripcion, 
+                libros.archivo,  -- Ruta del PDF
+                libros.imagen,   -- Ruta de la imagen
+                libros.fecha_publicacion 
+            FROM libros
+            JOIN autores ON libros.id_autor = autores.id_autor
+            JOIN categorias ON libros.id_categoria = categorias.id_categoria
+            WHERE libros.titulo LIKE ? OR categorias.nombre LIKE ?
+        """, (f"%{query}%", f"%{query}%"))
+
+        return render_template('buscar_libros.html', libros=libros, query=query)
+    except sqlite3.Error as e:
+        return f"Error en la base de datos: {e}", 500

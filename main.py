@@ -2,6 +2,7 @@ from flask import Flask
 import sqlite3
 from blueprints.login import login_bp
 from blueprints.index import index_bp
+from blueprints.administrador import administrador_bp
 
 app = Flask(__name__)
 app.secret_key = 'miclavesecreta'
@@ -80,6 +81,7 @@ init_db()
 
 app.register_blueprint(index_bp)
 app.register_blueprint(login_bp)
+app.register_blueprint(administrador_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -12,20 +12,13 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid px-0">
-            <a class="navbar-brand" href="#"><img src="../static/img/logo.png" alt="" width="100" /></a>
+            <a class="navbar-brand" href="{{ url_for('index.index') }}">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" width="100" />
+            </a>            
             <div class="order-lg-3 d-flex align-items-center">
                 <div>
                     <div class="d-flex align-items-center">
                         <div class="dropdown me-2">
-                            <!-- <button
-                                class="btn btn-light btn-icon rounded-circle d-flex align-items-center bd-theme"
-                                type="button"
-                                aria-expanded="false"
-                                data-bs-toggle="dropdown"
-                                aria-label="Toggle theme (auto)">
-                                <i class="bi theme-icon-active"></i>
-                                <span class="visually-hidden bs-theme-text">Toggle theme</span>
-                            </button> -->
                             <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bs-theme-text">
                                 <li>
                                     <button
@@ -47,23 +40,18 @@
                                         <span class="ms-2">Dark</span>
                                     </button>
                                 </li>
-                                <li>
-                                    <button
-                                        type="button"
-                                        class="dropdown-item d-flex align-items-center active"
-                                        data-bs-theme-value="auto"
-                                        aria-pressed="true">
-                                        <i class="bi theme-icon bi-circle-half"></i>
-                                        <span class="ms-2">Auto</span>
-                                    </button>
-                                </li>
                             </ul>
                         </div>
-                        <a href="/login" class="btn btn-outline-primary shadow-sm me-1">Sign In</a>
-                        <a href="/register" class="btn btn-primary d-none d-md-block">Sign Up</a>
+                        {% if session.get('user_id') %}
+                            <!-- Usuario autenticado -->
+                            <a href="/logout" class="btn btn-primary shadow-sm me-1">Cerrar Sesión</a>
+                        {% else %}
+                            <!-- Usuario no autenticado -->
+                            <a href="/login" class="btn btn-outline-primary shadow-sm me-1">Sign In</a>
+                            <a href="/logout" class="btn btn-primary">Sign Up</a>
+                        {% endif %}
                     </div>
                 </div>
-                <!-- Button -->
                 <button
                     class="navbar-toggler collapsed"
                     type="button"
@@ -77,14 +65,13 @@
                     <span class="icon-bar bottom-bar"></span>
                 </button>
             </div>
-            <!-- Collapse -->
             <div class="collapse navbar-collapse" id="navbar-default">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="">Inicio</a>
+                        <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Libros</a>
+                        <a class="nav-link" href="{{ url_for('index.index') }}#related-section">Libros</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a
@@ -95,44 +82,37 @@
                             aria-haspopup="true"
                             aria-expanded="false"
                             data-bs-display="static">
-                            Categorias
+                            Categorías
                         </a>
                         <ul class="dropdown-menu dropdown-menu-arrow" aria-labelledby="navbarDropdown">
-                            <li class="dropdown-submenu dropend">
-                                <a class="dropdown-item dropdown-list-group-item dropdown-toggle" href="#"></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="../pages/course-category.html">Novela</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!" class="dropdown-item">Matematica</a>
-                                    </li>
-                                    <li>
-                                        <a href="#!" class="dropdown-item">Física</a>
-                                    </li>
-                                </ul>
-                            </li>
+                            {% for categoria in categorias_navbar %}
                             <li>
-                                <a href="#!" class="dropdown-item"></a>
+                                <a class="dropdown-item" href="{{ url_for('index.libros_por_categoria', categoria_id=categoria[0]) }}">
+                                    {{ categoria[1] }}
+                                </a>
                             </li>
-                            <li>
-                                <a href="#!" class="dropdown-item">Anthor Action</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="dropdown-item">Something else here</a>
-                            </li>
+                            {% endfor %}
                         </ul>
-                    </li>
+                    </li> 
                 </ul>
-                <form class="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center">
+                <form class="mt-3 mt-lg-0 ms-lg-3 d-flex align-items-center" method="GET" action="{{ url_for('index.buscar_libros') }}">
                     <span class="position-absolute ps-3 search-icon">
                         <i class="fe fe-search"></i>
                     </span>
-                    <input type="search" class="form-control ps-6" placeholder="Buscar" />
+                    <input 
+                        type="search" 
+                        name="query" 
+                        class="form-control ps-6" 
+                        placeholder="Buscar libros o categorías" 
+                        aria-label="Buscar libros o categorías" 
+                        required />
+                    <button type="submit" class="btn btn-outline-primary ms-2">Buscar</button>
                 </form>
+                
             </div>
         </div>
     </nav>
+    
     {% block content %} 
     
     

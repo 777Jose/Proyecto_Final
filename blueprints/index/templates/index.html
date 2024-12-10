@@ -4,38 +4,54 @@
 
 {% block content %}
 
+<!-- Mostrar un mensaje personalizado si el usuario está logueado -->
+<section>
+  {% if session.get('user_name') %}
+  <p>Hola, {{ session.get('user_name') }}. ¡Bienvenido a la Biblioteca Virtual!</p>
+  {% if session.get('user_role') == 'admin' %}
+  <a  href="{{ url_for('administrador.admin_index') }}" class="btn btn-danger">Ir a Administración</a>
+  {% endif %}
+  {% else %}
+  <p>Hola, Invitado. Por favor, <a href="{{ url_for('login.login') }}">inicia sesión</a> para acceder a más funciones.
+  </p>
+  {% endif %}
+</section>
+
+
 <section class="secction_1">
   <div class="carousel">
     <h2>Categorías</h2>
     <div class="carrusel-list" id="carrusel-list">
-      <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev" onclick="app.processingButton(event)">
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" class="svg-inline--fa fa-chevron-left fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <path fill="currentColor" d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z"></path>
+      <button class="carrusel-arrow carrusel-prev" id="button-prev" data-button="button-prev"
+        onclick="app.processingButton(event)">
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left"
+          class="svg-inline--fa fa-chevron-left fa-w-10" role="img" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512">
+          <path fill="currentColor"
+            d="M34.52 239.03L228.87 44.69c9.37-9.37 24.57-9.37 33.94 0l22.67 22.67c9.36 9.36 9.37 24.52.04 33.9L131.49 256l154.02 154.75c9.34 9.38 9.32 24.54-.04 33.9l-22.67 22.67c-9.37 9.37-24.57 9.37-33.94 0L34.52 272.97c-9.37-9.37-9.37-24.57 0-33.94z">
+          </path>
         </svg>
       </button>
       <div class="carrusel-track" id="track">
         <div class="carrusel">
-          <!-- Recorriendo las categorías obtenidas desde la base de datos -->
           {% for categoria in categorias %}
-            <div>
-              <!-- Redirigir a libros_por_categoria con el id de la categoría -->
-              <a href="{{ url_for('index.libros_por_categoria', categoria_id=categoria[0]) }}">
-                <h4><small>{{ categoria[1] }}</small></h4> <!-- Nombre de la categoría -->
-                <picture>
-                  <img src="{{ url_for('static', filename='img/categoriasimg/' + categoria[1] + '.png') }}" alt="Imagen de categoría">
-                </picture>
-              </a>
-            </div>
+          <div>
+            <a href="{{ url_for('index.libros_por_categoria', categoria_id=categoria[0]) }}">
+              <h4><small>{{ categoria[1] }}</small></h4>
+              <picture>
+                <img src="{{ url_for('static', filename='img/categoriasimg/' + categoria[1] + '.png') }}"
+                  alt="Imagen de categoría">
+              </picture>
+            </a>
+          </div>
           {% endfor %}
         </div>
       </div>
-      
     </div>
   </div>
 </section>
 
-
-<section class="related-section section">
+<section id="related-section" class="related-section section">
   <div class="container">
     <h2>LIBROS A - Z</h2>
     <div class="text-center" style="height: 50px;">Todos los libros que tenemos a su disposición</div>
@@ -43,9 +59,9 @@
       {% for libro in libros %}
       <div class="col-6 col-lg-3 mb-5">
         <div class="card text-center">
-          <!-- Redirigir al detalle del libro al hacer clic en la imagen -->
           <a href="{{ url_for('index.mostrar_libro', libro_id=loop.index) }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/librosimg/' + libro[5]) }}" alt="Imagen del libro">
+            <img class="img-fluid book-image" src="{{ url_for('static', filename='img/librosimg/' + libro[5]) }}"
+              alt="Imagen del libro">
           </a>
           <div class="card-body">
             <h5 class="card-title">{{ libro[0] }}</h5>
@@ -60,8 +76,6 @@
     </div>
   </div>
 </section>
-
-
 
 
 {% endblock %}

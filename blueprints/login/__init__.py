@@ -64,14 +64,22 @@ def login():
 
         try:
             with sqlite3.connect('biblioteca.db') as conn:
-                conn.row_factory = sqlite3.Row 
+                conn.row_factory = sqlite3.Row
                 cursor = conn.cursor()
                 cursor.execute('SELECT * FROM usuarios WHERE email = ?', (email,))
                 usuario = cursor.fetchone()
 
                 if usuario and check_password_hash(usuario['password'], password):
-                    session['user_id'] = usuario['id_usuario'] 
-                    return redirect(url_for('login.index'))
+                    # Guardar los datos en la sesión
+                    session['user_id'] = usuario['id_usuario']
+                    session['user_name'] = usuario['nombre']
+                    session['user_role'] = usuario['rol']
+
+                    # Redirigir según el rol del usuario
+                    if usuario['rol'] == 'admin':
+                        return redirect(url_for('administrador.admin_index'))
+                    else:
+                        return redirect(url_for('index.index'))
 
                 return "Credenciales incorrectas.", 401
         except sqlite3.Error as e:
@@ -82,10 +90,7 @@ def login():
 
 @login_bp.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    # Limpia toda la sesión al cerrar sesión
+    session.clear()
+    return redirect(url_for('login.login'))
 
-    return redirect('/')
-
-@login_bp.route('/admin/dashboard')
-def dashboard():
-    return render_template('/admin/dashboard.html')

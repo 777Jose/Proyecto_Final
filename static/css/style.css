@@ -51,6 +51,10 @@ h3 {
     font-size: 1.5rem;
 }
 
+p{
+    font-size: 20px;
+}
+
 
 /* Estilo para el slider (Swiper) */
 .swiper {
@@ -139,19 +143,35 @@ h3 {
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     text-align: center;
+    height: 100%; /* Hace que todas las tarjetas tengan la misma altura */
+    display: flex;
+    flex-direction: column; /* Organiza el contenido de la tarjeta en columna */
+    justify-content: space-between;
 }
 
 .card-title {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #ffb900;
+    margin-bottom: 8px;
 }
 
 .card-autor,
 .card-categoria,
 .card-descripcion,
 .card-fecha {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #c4c4c4;
+}
+.book-image {
+    height: 300px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Asegura que las imágenes mantengan su proporción */
+    border-radius: 8px;
+    margin-bottom: 10px; /* Espaciado inferior para separar la imagen del contenido */
+}
+
+/* Espaciado entre tarjetas */
+.row .col-6 {
+    margin-bottom: 20px;
 }
 
 /* Estilo para la barra de búsqueda */
