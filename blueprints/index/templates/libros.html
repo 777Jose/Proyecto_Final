@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %} HOME {% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="container_2">
+        <div class="card_2">
+            <!-- Imagen del libro -->
+            <img src="{{ url_for('static', filename='img/librosimg/' + libro[4]) }}" alt="Portada del libro" class="cover">
+            <div class="content">
+                <!-- Título del libro -->
+                <h2 class="title">{{ libro[0] }}</h2>
+                <!-- Autor del libro -->
+                <p class="author">{{ libro[1] }}</p>
+                <!-- Descripción breve -->
+                <p class="description">{{ libro[2] }}</p>
+                <!-- Fecha de publicación -->
+                <p class="year-pages">Publicado el: {{ libro[5] }}</p>
+                <!-- Botón para leer el PDF -->
+                <div class="buttons">
+                    <button class="button ver-pdf" data-pdf="{{ url_for('static', filename='img/libros/' + libro[3]) }}">
+                        Ver PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contenedor del PDF -->
+    <div id="pdf-container" style="display: none; margin-top: 20px;">
+        <h2> {{ libro[0] }} </h2>
+        <iframe id="pdf-viewer" src="" width="100%" height="600px" style="border: none;"></iframe>
+    </div>
+</section>
+
+
+
+{% endblock %}

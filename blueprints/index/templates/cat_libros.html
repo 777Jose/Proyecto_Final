@@ -16,7 +16,7 @@
         <div class="col-6 col-lg-3 mb-5">
           <div class="card text-center">
             <!-- Mostrar la imagen del libro -->
-            <a href="{{ url_for('static', filename='libros/' + libro[3]) }}" target="_blank">
+            <a href="{{ url_for('index.mostrar_libro', libro_id=loop.index) }}">
               <img class="img-fluid" src="{{ url_for('static', filename='img/librosimg/' + libro[4]) }}" alt="Imagen del libro">
             </a>
             <div class="card-body">

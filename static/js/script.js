@@ -30,3 +30,17 @@ function App(){ }
         }
     }
 
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const buttons = document.querySelectorAll(".ver-pdf");
+            const pdfContainer = document.getElementById("pdf-container");
+            const pdfViewer = document.getElementById("pdf-viewer");
+    
+            buttons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const pdfUrl = button.getAttribute("data-pdf");
+                    pdfViewer.src = pdfUrl;
+                    pdfContainer.style.display = "block";
+                });
+            });
+        });

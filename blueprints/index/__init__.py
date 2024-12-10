@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, send_file
 import sqlite3
 
 index_bp = Blueprint("index", __name__, template_folder="templates")
@@ -80,3 +80,25 @@ def libros_por_categoria(categoria_id):
     """, (categoria_id,), one=True)
     
     return render_template("cat_libros.html", libros=libros, categoria=categoria)
+
+# Ruta para mostrar detalles de un libro específico
+@index_bp.route("/libro/<int:libro_id>")
+def mostrar_libro(libro_id):
+    # Consulta para obtener los datos del libro
+    libro = query_db("""
+        SELECT 
+            libros.titulo, 
+            autores.nombre || ' ' || autores.apellido AS autor, 
+            libros.descripcion, 
+            libros.archivo,  -- Ruta del PDF
+            libros.imagen,   -- Ruta de la imagen
+            libros.fecha_publicacion
+        FROM libros
+        JOIN autores ON libros.id_autor = autores.id_autor
+        WHERE libros.id_libro = ?
+    """, (libro_id,), one=True)
+    
+    if libro:
+        return render_template("libros.html", libro=libro)
+    else:
+        return "Libro no encontrado", 404

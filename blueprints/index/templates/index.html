@@ -4,10 +4,6 @@
 
 {% block content %}
 
-<section>
-  <h1></h1>
-</section>
-
 <section class="secction_1">
   <div class="carousel">
     <h2>Categorías</h2>
@@ -39,16 +35,16 @@
 </section>
 
 
-<section class="related-secction section section">
+<section class="related-section section">
   <div class="container">
-    <h2 class="section title text-center">LIBROS A - Z</h2>
+    <h2>LIBROS A - Z</h2>
     <div class="text-center" style="height: 50px;">Todos los libros que tenemos a su disposición</div>
     <div class="row">
       {% for libro in libros %}
       <div class="col-6 col-lg-3 mb-5">
         <div class="card text-center">
-          <!-- Mostrar la imagen del libro -->
-          <a href="{{ url_for('static', filename='libros/' + libro[4]) }}" target="_blank">
+          <!-- Redirigir al detalle del libro al hacer clic en la imagen -->
+          <a href="{{ url_for('index.mostrar_libro', libro_id=loop.index) }}">
             <img class="img-fluid" src="{{ url_for('static', filename='img/librosimg/' + libro[5]) }}" alt="Imagen del libro">
           </a>
           <div class="card-body">
@@ -64,6 +60,7 @@
     </div>
   </div>
 </section>
+
 
 
 
