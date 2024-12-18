@@ -1,0 +1,66 @@
+{% extends 'baseadm.html' %}
+
+{% block title %}Lista Completa de Libros{% endblock %}
+
+{% block content %}
+<h1 class="mt-4">Lista Completa de Libros</h1>
+<p class="mb-4">Información detallada de los libros registrados en la biblioteca, incluyendo archivos y portadas.</p>
+
+<!-- Botón para agregar un nuevo libro -->
+<a href="{{ url_for('administrador.agregar_libro') }}" class="btn btn-success mb-3">+ Nuevo Libro</a>
+
+<!-- Tabla de libros -->
+<table class="table table-dark table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Categoría</th>
+            <th>Descripción</th>
+            <th>Portada</th>
+            <th>Archivo</th>
+            <th>Fecha Publicación</th>
+            <th>Fecha Agregado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro['id_libro'] }}</td>
+            <td>{{ libro['titulo'] }}</td>
+            <td>{{ libro['autor'] }}</td>
+            <td>{{ libro['categoria'] }}</td>
+            <td>{{ libro['descripcion'] }}</td>
+            <!-- Imagen de portada -->
+            <td>
+                {% if libro['imagen'] %}
+                    <img src="{{ url_for('static', filename='img/librosimg/' + libro['imagen']) }}" alt="Portada" style="width: 50px; height: auto;">
+                {% else %}
+                    <span class="text-muted">Sin imagen</span>
+                {% endif %}
+            </td>
+            <!-- Archivo descargable -->
+            <td>
+                {% if libro['archivo'] %}
+                    <a href="{{ url_for('static', filename='img/libros/' + libro['archivo']) }}" download class="btn btn-sm btn-primary">Descargar</a>
+                {% else %}
+                    <span class="text-muted">No disponible</span>
+                {% endif %}
+            </td>
+            <td>{{ libro['fecha_publicacion'] or 'No registrada' }}</td>
+            <td>{{ libro['fecha_agregado'] }}</td>
+            <!-- Botón Editar -->
+            <td>
+                <a href="{{ url_for('administrador.editar_libro', id_libro=libro['id_libro']) }}" class="btn btn-warning btn-sm">Editar</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="10" class="text-center">No hay libros registrados actualmente.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

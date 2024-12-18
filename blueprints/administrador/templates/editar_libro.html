@@ -1,15 +1,59 @@
 {% extends 'baseadm.html' %}
 
-{% block title %}Editar Libro | ADMINISTRADOR{% endblock %}
+{% block title %}Editar Libro{% endblock %}
 
 {% block content %}
 <h1>Editar Libro</h1>
-<form method="POST">
+<p>En esta sección puedes editar la información de un libro.</p>
+
+<form action="{{ url_for('administrador.editar_libro', id_libro=libro['id_libro']) }}" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="titulo" class="form-label">Título</label>
         <input type="text" class="form-control" id="titulo" name="titulo" value="{{ libro['titulo'] }}" required>
     </div>
-    <!-- Repetir el resto de los campos como en agregar_libro.html pero precargados -->
-    ...
+    <div class="mb-3">
+        <label for="id_autor" class="form-label">Autor</label>
+        <select class="form-select" id="id_autor" name="id_autor" required>
+            {% for autor in autores %}
+            <option value="{{ autor['id_autor'] }}" {% if autor['id_autor'] == libro['id_autor'] %}selected{% endif %}>
+                {{ autor['nombre_completo'] }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="id_categoria" class="form-label">Categoría</label>
+        <select class="form-select" id="id_categoria" name="id_categoria" required>
+            {% for categoria in categorias %}
+            <option value="{{ categoria['id_categoria'] }}" {% if categoria['id_categoria'] == libro['id_categoria'] %}selected{% endif %}>
+                {{ categoria['nombre'] }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ libro['descripcion'] }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="imagen" class="form-label">Portada (Imagen)</label>
+        <input type="file" class="form-control" id="imagen" name="imagen">
+        {% if libro['imagen'] %}
+        <p>Actual: <img src="{{ url_for('static', filename='img/librosimg/' + libro['imagen']) }}" width="100" alt="Portada"></p>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label for="archivo" class="form-label">Archivo PDF</label>
+        <input type="file" class="form-control" id="archivo" name="archivo">
+        {% if libro['archivo'] %}
+        <p>Actual: <a href="{{ url_for('static', filename='img/libros/' + libro['archivo']) }}" download>Descargar PDF</a></p>
+        {% endif %}
+    </div>
+    <div class="mb-3">
+        <label for="fecha_publicacion" class="form-label">Fecha de Publicación</label>
+        <input type="date" class="form-control" id="fecha_publicacion" name="fecha_publicacion" value="{{ libro['fecha_publicacion'] }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a href="{{ url_for('administrador.libros') }}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}

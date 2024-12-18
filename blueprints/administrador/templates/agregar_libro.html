@@ -1,10 +1,12 @@
 {% extends 'baseadm.html' %}
 
-{% block title %}Agregar Libro | ADMINISTRADOR{% endblock %}
+{% block title %}Agregar Nuevo Libro{% endblock %}
 
 {% block content %}
 <h1>Agregar Nuevo Libro</h1>
-<form method="POST">
+<p>Completa la información del libro para registrarlo en la biblioteca.</p>
+
+<form method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="titulo" class="form-label">Título</label>
         <input type="text" class="form-control" id="titulo" name="titulo" required>
@@ -13,7 +15,7 @@
         <label for="id_autor" class="form-label">Autor</label>
         <select class="form-select" id="id_autor" name="id_autor" required>
             {% for autor in autores %}
-            <option value="{{ autor['id_autor'] }}">{{ autor['nombre'] }} {{ autor['apellido'] }}</option>
+            <option value="{{ autor['id_autor'] }}">{{ autor['nombre_completo'] }}</option>
             {% endfor %}
         </select>
     </div>
@@ -27,16 +29,21 @@
     </div>
     <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
-        <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
+        <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
     </div>
     <div class="mb-3">
-        <label for="archivo" class="form-label">Archivo</label>
-        <input type="text" class="form-control" id="archivo" name="archivo" required>
+        <label for="imagen" class="form-label">Portada (Imagen)</label>
+        <input type="file" class="form-control" id="imagen" name="imagen">
     </div>
     <div class="mb-3">
-        <label for="imagen" class="form-label">Imagen</label>
-        <input type="text" class="form-control" id="imagen" name="imagen">
+        <label for="archivo" class="form-label">Archivo PDF</label>
+        <input type="file" class="form-control" id="archivo" name="archivo">
     </div>
-    <button type="submit" class="btn btn-success">Agregar Libro</button>
+    <div class="mb-3">
+        <label for="fecha_publicacion" class="form-label">Fecha de Publicación</label>
+        <input type="date" class="form-control" id="fecha_publicacion" name="fecha_publicacion">
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Libro</button>
+    <a href="{{ url_for('administrador.libros') }}" class="btn btn-secondary">Cancelar</a>
 </form>
 {% endblock %}

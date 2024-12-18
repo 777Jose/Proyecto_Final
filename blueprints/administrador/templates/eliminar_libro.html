@@ -1,12 +1,12 @@
 {% extends 'baseadm.html' %}
 
-{% block title %}Eliminar Libro | ADMINISTRADOR{% endblock %}
+{% block title %}Eliminar Libros | ADMINISTRADOR{% endblock %}
 
 {% block content %}
-<h1>Eliminar Libro</h1>
-<p>En esta sección puedes eliminar libros de la biblioteca.</p>
+<h1>Eliminar Libros</h1>
+<p>En esta sección puedes eliminar libros registrados en la biblioteca.</p>
 
-<!-- Tabla de libros -->
+<!-- Tabla para mostrar libros -->
 <table class="table table-dark table-striped">
     <thead>
         <tr>
@@ -25,10 +25,18 @@
             <td>{{ libro['autor'] }}</td>
             <td>{{ libro['categoria'] }}</td>
             <td>
-                <form action="{{ url_for('administrador.eliminar_libro', id_libro=libro['id_libro']) }}" method="POST" style="display: inline;">
-                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                <!-- Formulario para eliminar libro -->
+                <form action="{{ url_for('administrador.eliminar_libro') }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="id_libro" value="{{ libro['id_libro'] }}">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Eliminar
+                    </button>
                 </form>
             </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No hay libros registrados actualmente.</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -36,14 +44,14 @@
 
 <!-- Mensajes flash -->
 {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<div class="alert alert-dismissible mt-3">
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
+    {% if messages %}
+    <div class="alert mt-3">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endif %}
+    {% endif %}
 {% endwith %}
 {% endblock %}

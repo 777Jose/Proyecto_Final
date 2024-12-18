@@ -34,8 +34,8 @@ def index():
             autores.nombre || ' ' || autores.apellido AS autor, 
             categorias.nombre AS categoria, 
             libros.descripcion, 
-            libros.archivo,  -- Ruta del PDF
-            libros.imagen,   -- Ruta de la imagen
+            libros.archivo,
+            libros.imagen,
             libros.fecha_publicacion 
         FROM libros
         JOIN autores ON libros.id_autor = autores.id_autor
